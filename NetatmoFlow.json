@@ -1,0 +1,213 @@
+[
+    {
+        "id": "a113d267.913e08",
+        "type": "tab",
+        "label": "Netatmo flow"
+    },
+    {
+        "id": "7f6e3ad5.f42324",
+        "type": "inject",
+        "z": "a113d267.913e08",
+        "name": "",
+        "topic": "",
+        "payload": "Getstationsdata",
+        "payloadType": "str",
+        "repeat": "30",
+        "crontab": "",
+        "once": false,
+        "x": 130,
+        "y": 40,
+        "wires": [
+            [
+                "324ac3b7.b63e14"
+            ]
+        ]
+    },
+    {
+        "id": "324ac3b7.b63e14",
+        "type": "netatmo-dashboard",
+        "z": "a113d267.913e08",
+        "creds": "b7dff6d3.02f3d8",
+        "x": 340,
+        "y": 40,
+        "wires": [
+            [
+                "dc2c2953.7be8d8",
+                "ba27f289.aa9a6"
+            ]
+        ]
+    },
+    {
+        "id": "dc2c2953.7be8d8",
+        "type": "debug",
+        "z": "a113d267.913e08",
+        "name": "Debug Netatmo Dashboard",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 1220,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "ba27f289.aa9a6",
+        "type": "function",
+        "z": "a113d267.913e08",
+        "name": "ExtractTempINandOUT",
+        "func": "var TempIN  = {payload: msg.payload.temperature};\nvar TempOUT = {payload: msg.payload.externalTemperature};\n\nreturn [TempIN, TempOUT];",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 570,
+        "y": 120,
+        "wires": [
+            [
+                "2cf649d2.9ad00a",
+                "7e055425.fec20c"
+            ],
+            [
+                "e42ffe51.54d6f",
+                "9ab0a598.79c9d8"
+            ]
+        ]
+    },
+    {
+        "id": "2cf649d2.9ad00a",
+        "type": "function",
+        "z": "a113d267.913e08",
+        "name": "InTemp",
+        "func": "var Temp  = JSON.parse(msg.payload);\nvar Message = {payload:Temp+\"°C\"};\n\nif (Temp > 25)\n{\n    Message = \"Temperature is high: \" + Temp+\"°C\";\n}\n\nreturn Message;",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 780,
+        "y": 200,
+        "wires": [
+            [
+                "9725c0cf.daa7b",
+                "4d721cde.2c5ff"
+            ]
+        ]
+    },
+    {
+        "id": "e42ffe51.54d6f",
+        "type": "function",
+        "z": "a113d267.913e08",
+        "name": "OutTemp",
+        "func": "var Temp  = JSON.parse(msg.payload);\nvar Message = {payload:Temp+\"°C\"};\n\nif (Temp < 4)\n{\n    Message = \"Temperature is low: \" + Temp+\"°C\";\n}\n\nreturn Message;",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 780,
+        "y": 240,
+        "wires": [
+            [
+                "b51a8162.7b7a98",
+                "a88a7905.c547c8"
+            ]
+        ]
+    },
+    {
+        "id": "9725c0cf.daa7b",
+        "type": "ui_text",
+        "z": "a113d267.913e08",
+        "group": "a7cd68d.eafd118",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Intérieur",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 940,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "b51a8162.7b7a98",
+        "type": "ui_text",
+        "z": "a113d267.913e08",
+        "group": "a7cd68d.eafd118",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Extérieur",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 940,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "7e055425.fec20c",
+        "type": "debug",
+        "z": "a113d267.913e08",
+        "name": "Debug TempIN",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 1180,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "9ab0a598.79c9d8",
+        "type": "debug",
+        "z": "a113d267.913e08",
+        "name": "Debug TempOUT",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 1190,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "4d721cde.2c5ff",
+        "type": "debug",
+        "z": "a113d267.913e08",
+        "name": "Debug InTemp msg",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 1190,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "a88a7905.c547c8",
+        "type": "debug",
+        "z": "a113d267.913e08",
+        "name": "Debug OutTemp msg",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 1200,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "b7dff6d3.02f3d8",
+        "type": "netatmo-config-node",
+        "z": "",
+        "client_id": "ID",
+        "client_secret": "SECRET",
+        "username": "EMAIL",
+        "password": "PASSWORD"
+    },
+    {
+        "id": "a7cd68d.eafd118",
+        "type": "ui_group",
+        "z": "",
+        "name": "Météo",
+        "tab": "9e89bce3.ebbf88",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "9e89bce3.ebbf88",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Accueil",
+        "icon": "dashboard",
+        "order": 1
+    }
+]
