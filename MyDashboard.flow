@@ -1,0 +1,300 @@
+[
+    {
+        "id": "eb1e7006.e183e8",
+        "type": "ui_switch",
+        "z": "cd6a9bbc.a6ce4",
+        "name": "",
+        "label": "Show data",
+        "group": "84fb3216.d5d508",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 110,
+        "y": 40,
+        "wires": [
+            [
+                "814c1330.59e998",
+                "b50713e8.e57258"
+            ]
+        ]
+    },
+    {
+        "id": "814c1330.59e998",
+        "type": "ui_text",
+        "z": "cd6a9bbc.a6ce4",
+        "group": "84fb3216.d5d508",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Switch status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 370,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "903233e0.11c29",
+        "type": "debug",
+        "z": "cd6a9bbc.a6ce4",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 650,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "b50713e8.e57258",
+        "type": "function",
+        "z": "cd6a9bbc.a6ce4",
+        "name": "DoData",
+        "func": "var StravaRequest = {payload:
+\"get-most-recent-activity\"};\nvar switchON = {payload: \"Montrer les
+donnees\"};\nvar switchOFF = {payload: \"Pas de donnees\"};\nif
+(msg.payload === true )\n{\n    return [switchON, StravaRequest];\n}
+else {\n    return [switchOFF, null];\n}",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 360,
+        "y": 80,
+        "wires": [
+            [
+                "903233e0.11c29",
+                "168e73dc.df56cc"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "168e73dc.df56cc",
+        "type": "ui_text",
+        "z": "cd6a9bbc.a6ce4",
+        "group": "496b7a69.936c6c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Message a afficher",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 670,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "5d9e56a7.730f58",
+        "type": "inject",
+        "z": "cd6a9bbc.a6ce4",
+        "name": "",
+        "topic": "Date",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 140,
+        "y": 180,
+        "wires": [
+            [
+                "903233e0.11c29"
+            ]
+        ]
+    },
+    {
+        "id": "db0049e3.2bc35",
+        "type": "ui_form",
+        "z": "cd6a9bbc.a6ce4",
+        "name": "",
+        "label": "Ecrivez quelque chose...",
+        "group": "5b2bbdc2.be08cc",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Message",
+                "value": "MyMsg",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Option 1",
+                "value": "Opt1",
+                "type": "checkbox",
+                "required": false
+            },
+            {
+                "label": "Option 2",
+                "value": "Opt2",
+                "type": "checkbox",
+                "required": false
+            }
+        ],
+        "formValue": {
+            "MyMsg": "",
+            "Opt1": false,
+            "Opt2": false
+        },
+        "payload": "",
+        "topic": "",
+        "x": 150,
+        "y": 280,
+        "wires": [
+            [
+                "7498a8ec.ba88a"
+            ]
+        ]
+    },
+    {
+        "id": "7498a8ec.ba88a",
+        "type": "ui_toast",
+        "z": "cd6a9bbc.a6ce4",
+        "position": "top left",
+        "displayTime": "3",
+        "name": "Notif",
+        "x": 410,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "8ef685e0.e1869",
+        "type": "postgres",
+        "z": "cd6a9bbc.a6ce4",
+        "postgresdb": "83c4153e.d3e1",
+        "name": "Tweeter",
+        "output": false,
+        "outputs": 0,
+        "x": 220,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "f471bc36.730158",
+        "type": "ui_ui_control",
+        "z": "cd6a9bbc.a6ce4",
+        "name": "Affichage Météo",
+        "x": 640,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bf583cfd.90bf",
+        "type": "ui_button",
+        "z": "cd6a9bbc.a6ce4",
+        "name": "",
+        "group": "74c5735b.5f659c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Regarder la météo",
+        "color": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 130,
+        "y": 340,
+        "wires": [
+            [
+                "b1658a66.e1f1e8"
+            ]
+        ]
+    },
+    {
+        "id": "b1658a66.e1f1e8",
+        "type": "function",
+        "z": "cd6a9bbc.a6ce4",
+        "name": "Go to Météo",
+        "func": "var msg = {};\nmsg.payload = {tab:\"Météo\"};\n\nreturn
+msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 340,
+        "wires": [
+            [
+                "f471bc36.730158"
+            ]
+        ]
+    },
+    {
+        "id": "84fb3216.d5d508",
+        "type": "ui_group",
+        "z": "",
+        "name": "Control",
+        "tab": "d2ad30b9.d289a",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "496b7a69.936c6c",
+        "type": "ui_group",
+        "z": "",
+        "name": "Datas",
+        "tab": "9e89bce3.ebbf88",
+        "order": 2,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "5b2bbdc2.be08cc",
+        "type": "ui_group",
+        "z": "",
+        "name": "Saisie",
+        "tab": "9e89bce3.ebbf88",
+        "order": 3,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "83c4153e.d3e1",
+        "type": "postgresdb",
+        "z": "",
+        "hostname": "192.168.1.55",
+        "port": "5432",
+        "db": "nodered",
+        "ssl": false
+    },
+    {
+        "id": "74c5735b.5f659c",
+        "type": "ui_group",
+        "z": "",
+        "name": "MenuGauche",
+        "tab": "9e89bce3.ebbf88",
+        "order": 1,
+        "disp": false,
+        "width": "4"
+    },
+    {
+        "id": "d2ad30b9.d289a",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Paramètres",
+        "icon": "dashboard",
+        "order": 2
+    },
+    {
+        "id": "9e89bce3.ebbf88",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Accueil",
+        "icon": "dashboard",
+        "order": 1
+    }
+]
